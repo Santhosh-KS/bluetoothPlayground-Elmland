@@ -26,6 +26,7 @@ port module Effect exposing
 
 import Browser.Navigation
 import Dict exposing (Dict)
+import Json.Decode
 import Json.Encode
 import Route exposing (Route)
 import Route.Path
@@ -60,7 +61,7 @@ type Effect msg
 port outgoing : { tag : String, data : Json.Encode.Value } -> Cmd msg
 
 
-port incoming : (Json.Encode.Value -> msg) -> Sub msg
+port incoming : (Json.Decode.Value -> msg) -> Sub msg
 
 
 port receivingString : (String -> msg) -> Sub msg

@@ -13,12 +13,12 @@ export function getBluetoothList(app) {
       console.log("> Connected:        " + device.gatt.connected);
       responseObj.name = "SOME Default";
       responseObj.id = device.id;
-      responseObj.connected = device.gatt.connected;
+      responseObj.status = device.gatt.connected;
       console.log(responseObj);
       if (app.ports?.incoming?.send) {
         // console.log(app.ports);
         // console.log("Argh! Got him");
-        app.ports.incoming.send(JSON.stringify(responseObj));
+        app.ports.incoming.send(responseObj);
         app.ports.receivingString.send("Hello This pushed from JS TO ELM!");
       }
     })

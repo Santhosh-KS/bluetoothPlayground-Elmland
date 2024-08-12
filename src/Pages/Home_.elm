@@ -1,13 +1,13 @@
 module Pages.Home_ exposing (Model, Msg, page)
 
 -- import Components.Hero exposing (Hero)
+-- import Json.Encode
 
 import Effect exposing (Effect)
 import Html exposing (Html)
 import Html.Attributes as Attr
 import Html.Events as Events
 import Json.Decode
-import Json.Encode
 import Page exposing (Page)
 import Route exposing (Route)
 import Shared
@@ -49,7 +49,7 @@ init () =
 
 type Msg
     = UserClickedButton
-    | ReceivedMsgFromJS Json.Encode.Value
+    | ReceivedMsgFromJS Json.Decode.Value
     | ReceivingStringsFromJS String
 
 
@@ -62,6 +62,10 @@ update msg model =
             )
 
         ReceivedMsgFromJS rxJson ->
+            let
+                _ =
+                    Debug.log "Receving Update for JSON: " rxJson
+            in
             case Json.Decode.decodeValue Shared.btDetailsDecoder rxJson of
                 Ok data ->
                     let
@@ -73,6 +77,10 @@ update msg model =
                     )
 
                 Err _ ->
+                    let
+                        _ =
+                            Debug.log "ERRO Passiert OBJ : " model
+                    in
                     ( model, Effect.none )
 
         ReceivingStringsFromJS str ->
